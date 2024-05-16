@@ -27,7 +27,7 @@ RUN dnf config-manager --enable $codeready_builder_repo && \
 COPY ./setup /setup
 
 # Se ejecuta el script que lleva a cabo la compilación
-RUN bash /setup/setup.sh
+RUN bash /setup/build.sh
 
 # Capa de configuración y ejecución del servicio slapd
 # Se utiliza oracle linux 9 para la capa de configuración y ejecución
