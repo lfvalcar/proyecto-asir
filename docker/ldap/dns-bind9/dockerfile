@@ -15,5 +15,11 @@ RUN apt update -yq && apt install -yq bind9
 EXPOSE 53
 EXPOSE 53/udp
 
+# Copiar el script de configuración del servicio DNS en el directorio /root
+COPY ./config.sh /root/
+
+# Ejecución del script de configuración
+RUN bash /root/config.sh
+
 # Mantener el contenedor en ejecución
 CMD [ "service", "named", "start" ]
