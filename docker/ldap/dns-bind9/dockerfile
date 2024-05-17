@@ -1,0 +1,19 @@
+# Se utiliza la imagen de ubuntu "jammy"
+FROM ubuntu:jammy
+
+# Variables de entorno en el dockerfile
+ENV TZ Europe/Madrid
+ENV DEBIAN_FRONTEND noninteractive
+
+# Establecer la zona horaria
+RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
+
+# Actualizar la lista de paquetes e instalar el paquete DNS
+RUN apt update -yq && apt install -yq bind9
+
+# Exponer los puertos que utiliza el servicio
+EXPOSE 53
+EXPOSE 53/udp
+
+# Mantener el contenedor en ejecución
+CMD [ "service", "named", "start" ]
