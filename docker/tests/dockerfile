@@ -1,0 +1,11 @@
+# Se utiliza la última imagen de ubuntu para los tests
+FROM ubuntu:latest
+
+# Actualizar lista de paquetes y instalar los paquetes necesarios para los tests
+RUN apt update -yq && apt install -yq \
+  nmap \
+  iproute2 \
+  iputils-ping \
+  dnsutils
+
+CMD [ "tail", "-f", "/dev/null" ]
