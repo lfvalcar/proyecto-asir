@@ -2,15 +2,8 @@
 FROM ubuntu:jammy
 
 # Variables de entorno en el dockerfile
-# Preinstalación
 ENV TZ Europe/Madrid
 ENV DEBIAN_FRONTEND noninteractive
-# Setup DNS
-ENV dir_zonas /etc/bind/zones
-ENV forwarders '8.8.8.8 8.8.4.4'
-ENV domain test.local
-ENV ipv4_container 192.168.0.2
-ENV ipv4_anfitrion 192.168.1.57
 
 # Establecer la zona horaria
 RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
@@ -23,10 +16,7 @@ EXPOSE 53
 EXPOSE 53/udp
 
 # Copiar el script de configuración del servicio DNS en el directorio /root
-COPY ./config.sh /root/
-
-# Ejecución del script de configuración
-RUN bash /root/config.sh
+COPY ./setup-zones.sh /root/scripts/
 
 # Mantener el contenedor en ejecución
 CMD [ "service", "named", "start" ]
