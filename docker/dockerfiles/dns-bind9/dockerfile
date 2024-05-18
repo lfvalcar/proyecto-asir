@@ -19,4 +19,4 @@ EXPOSE 53/udp
 COPY ./setup-zones.sh /root/scripts/
 
 # Mantener el contenedor en ejecución
-CMD [ "service", "named", "start" ]
+CMD [ "tail", "-f", "/dev/null" ]
