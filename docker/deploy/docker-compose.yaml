@@ -1,2 +1,27 @@
 services:
+  dns-bind9:
+    image: lfvalcar/bind9
+    hostname: dnssrv
+    environment:
+      - ipv4_container=192.168.2.10
+      - ipv4_anfitrion=192.168.1.57
+      - dir_zones=/etc/bind/zones
+      - forwarders=8.8.8.8; 8.8.4.4;
+      - domain=test.local
+    command: [ "bash", "/root/scripts/setup-zones.sh" ]
+    dns: 192.168.2.10
+    networks:
+      test:
+        ipv4_address: 192.168.2.10
+    ports:
+      - "11001:53/tcp"
+      - "11001:53/udp"
+    volumes:
+      - ./volumes/bind9-zones:/etc/bind/zones
+  test-ubuntu:
+    image: lfvalcar/ubuntu-test
+    networks:
+      - test
 networks:
+  test:
+    external: true
