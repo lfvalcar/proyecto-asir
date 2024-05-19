@@ -12,7 +12,7 @@ RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezo
 RUN apt update -yq && apt install -yq ldap-utils debconf-utils
 
 # Copiar archivos de configuración del demonio slapd
-COPY ./setup /root/setup
+COPY ./setup /root/scripts
 
 # Mantener el contenedor en ejecución
 CMD [ "tail", "-f", "/dev/null" ]

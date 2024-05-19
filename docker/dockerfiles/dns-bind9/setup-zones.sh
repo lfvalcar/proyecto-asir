@@ -18,6 +18,8 @@
 # grep
 # cp
 # mkdir
+# tail
+# service
 
 # Cargar variables de entorno
 set -e

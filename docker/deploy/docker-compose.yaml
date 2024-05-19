@@ -1,7 +1,20 @@
 services:
+  ldap-openldap:
+    image: lfvalcar/openldap
+    hostname: dc
+    environment:
+      - dc1=test
+      - dc2=local
+    command: [ "bash", "/root/scripts/setup-slapd.sh" ]
+    dns: 192.168.2.10
+    networks:
+      test:
+        ipv4_address: 192.168.2.11
+    ports:
+      - "11002:389"
   dns-bind9:
     image: lfvalcar/bind9
-    hostname: dnssrv
+    hostname: dns
     environment:
       - ipv4_container=192.168.2.10
       - ipv4_anfitrion=192.168.1.57
