@@ -1,55 +1,15 @@
-# Capa de compilación y instalación del servicio slapd
-# Se utiliza oracle linux 9 para la capa de compilación
-FROM oraclelinux:9 AS builder
-
-# Variables del dockerfile builder
-ENV codeready_builder_repo ol9_codeready_builder
-ENV openldap_version openldap-2.6.7
-
-# Se activa el repositorio para la instalación de librerías necesarias para la
-# compilación del software
-RUN dnf config-manager --enable $codeready_builder_repo && \
-    # Se actualizan los metadatos de los repositorios y se instalan los paquetes necesarios para el proceso de compilación
-    dnf makecache --refresh -yq && dnf install -yq \
-    make \
-    perl-devel \
-    gcc \
-    tar \
-    autoconf \
-    # Se instalan las dependencias de desarrollo de openldap
-    openssl-devel \
-    cyrus-sasl-devel \
-    libtool-ltdl-devel \
-    libdb-devel \
-    libevent-devel \
-
-# Se copia al contenedor la carpeta con los archivos necesarios para la compilación
-COPY ./setup /setup
-
-# Se ejecuta el script que lleva a cabo la compilación
-RUN bash /setup/build.sh
-
-# Capa de configuración y ejecución del servicio slapd
-# Se utiliza oracle linux 9 para la capa de configuración y ejecución
-FROM oraclelinux:9
+# Se utiliza ubuntu jammy
+FROM ubuntu:jammy
 
 # Variables del dockerfile
 ENV TZ Europe/Madrid
+ENV DEBIAN_FRONTEND noninteractive
 
 # Establecer la zona horaria
 RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
 
-# Se actualizan los metadatos de los repositorios y se instalan los paquetes necesarios para el servicio
-RUN dnf makecache --refresh -yq && dnf install -yq \
-    perl \
-    openssl \
-    cyrus-sasl \
-    libtool \
-    libdb \
-    libevent \
+# Se actualiza la lista de paquetes y se instala los paquetes necesarios
+RUN apt update -yq && apt install -yq slapd ldap-utils
 
-# Se copia el software compilado a la capa de producción
-COPY FROM=builder /openldap /openldap
-
-# Mantener contenedor en ejecución
+# Mantener el contenedor en ejecución
 CMD [ "tail", "-f", "/dev/null" ]
