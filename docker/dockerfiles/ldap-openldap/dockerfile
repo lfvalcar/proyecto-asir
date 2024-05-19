@@ -9,7 +9,10 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
 
 # Se actualiza la lista de paquetes y se instala los paquetes necesarios
-RUN apt update -yq && apt install -yq slapd ldap-utils
+RUN apt update -yq && apt install -yq ldap-utils debconf-utils
+
+# Copiar archivos de configuración del demonio slapd
+COPY ./setup /root/setup
 
 # Mantener el contenedor en ejecución
 CMD [ "tail", "-f", "/dev/null" ]
