@@ -1,17 +1,24 @@
 services:
   ldap-openldap:
-    image: lfvalcar/openldap
-    hostname: dc
+    image: lfvalcar/openldap-proyecto
+    hostname: dc.test.local
     environment:
       - dc1=test
       - dc2=local
-    command: [ "bash", "/root/scripts/setup-slapd.sh" ]
+      - ca_cert=ca-cert.crt
+      - ca_key=ca-key.pem
+      - ca_info=ca.info
+      - server_cert=server-cert.pem
+      - server_key=server-key.pem
+      - server_info=server.info
+      - certinfo_ldif=cainfo.ldif
+    command: [ "bash", "/root/setup/setup-slapd.sh" ]
     dns: 192.168.2.10
     networks:
       test:
         ipv4_address: 192.168.2.11
     ports:
-      - "11002:389"
+      - "11002:636"
   dns-bind9:
     image: lfvalcar/bind9
     hostname: dns
@@ -33,6 +40,7 @@ services:
       - ./volumes/bind9-zones:/etc/bind/zones
   test-ubuntu:
     image: lfvalcar/ubuntu-test
+    hostname: test-ubuntu
     networks:
       - test
 networks:

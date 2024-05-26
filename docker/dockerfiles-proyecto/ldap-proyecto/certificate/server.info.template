@@ -1,0 +1,6 @@
+organization = TEST
+cn = server.test.local
+tls_www_server
+encryption_key
+signing_key
+expiration_days = 365

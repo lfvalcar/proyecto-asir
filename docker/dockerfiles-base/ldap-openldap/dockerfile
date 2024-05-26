@@ -1,18 +1,30 @@
 # Se utiliza ubuntu jammy
 FROM ubuntu:jammy
 
+# Requisitos
+# - dc1=test
+# - dc2=local
+# - ca_cert=ca-cert.crt
+# - ca_key=ca-key.pem
+# - server_cert=server-cert.pem
+# - server_key=server-key.pem
+# - certinfo_ldif=cainfo.ldif
+# - ca_info=ca.info (Necesario si no tienes certificado)
+# - server_info=server.info
+
 # Variables del dockerfile
 ENV TZ Europe/Madrid
 ENV DEBIAN_FRONTEND noninteractive
+ENV DIR_SETUP /root/setup
 
 # Establecer la zona horaria
 RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
 
 # Se actualiza la lista de paquetes y se instala los paquetes necesarios
-RUN apt update -yq && apt install -yq ldap-utils debconf-utils
+RUN apt update -yq && apt install -yq debconf-utils ca-certificates
 
 # Copiar archivos de configuración del demonio slapd
-COPY ./setup /root/scripts
+COPY ./setup ${DIR_SETUP}
 
 # Mantener el contenedor en ejecución
 CMD [ "tail", "-f", "/dev/null" ]

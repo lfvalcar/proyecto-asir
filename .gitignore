@@ -1,0 +1,7 @@
+*.info
+slapd.config
+*.ldif
+*.crt
+*.pem
+*.yaml
+*.yml

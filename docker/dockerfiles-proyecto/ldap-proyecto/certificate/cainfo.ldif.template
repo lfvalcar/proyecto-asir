@@ -1,0 +1,9 @@
+dn: cn=config
+add: olcTLSCACertificateFile
+olcTLSCACertificateFile: /etc/ssl/certs/ca-cert.crt
+-
+add: olcTLSCertificateFile
+olcTLSCertificateFile: /etc/ldap/server-cert.pem
+-
+add: olcTLSCertificateKeyFile
+olcTLSCertificateKeyFile: /etc/ldap/server-key.pem

@@ -1,0 +1,11 @@
+# Se utiliza la imagen del servicio ldap de openldap
+FROM lfvalcar/openldap
+
+# Variables del dockerfile
+ENV DIR_SETUP /root/setup
+
+# Copiar los certificados para SSL/TLS
+COPY ./certificate/* ${DIR_SETUP}/
+    
+# Mantener el contenedor en ejecución
+CMD [ "tail", "-f", "/dev/null" ]
