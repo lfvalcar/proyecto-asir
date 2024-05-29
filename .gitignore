@@ -4,4 +4,4 @@ slapd.config
 *.crt
 *.pem
 *.yaml
-*.yml
+*.pub
