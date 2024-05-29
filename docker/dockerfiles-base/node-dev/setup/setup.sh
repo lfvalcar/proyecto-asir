@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Variables externas obligatorias provenientes del dockerfile o del docker-compose
+# Variables de entorno
 # ${HOME} - Variable que contiene el home de usuario actual
 
 # Comandos/utilidades utilizados
