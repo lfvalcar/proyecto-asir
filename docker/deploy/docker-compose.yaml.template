@@ -11,7 +11,7 @@ services:
       - server_cert=server-cert.pem
       - server_key=server-key.pem
       - server_info=server.info
-      - certinfo_ldif=cainfo.ldif
+      - certinfo_ldif=ca-info.ldif
     command: [ "bash", "/root/setup/setup-slapd.sh" ]
     dns: 192.168.2.10
     networks:
@@ -21,7 +21,7 @@ services:
       - "11002:636"
   dns-bind9:
     image: lfvalcar/bind9
-    hostname: dns
+    hostname: dns.test.local
     environment:
       - ipv4_container=192.168.2.10
       - ipv4_anfitrion=192.168.1.57
@@ -38,6 +38,24 @@ services:
       - "11001:53/udp"
     volumes:
       - ./volumes/bind9-zones:/etc/bind/zones
+  api-nestjs:
+    image: lfvalcar/node-proyecto
+    networks:
+      - test
+    ports: 
+      - "3000:3000"
+      - "2200:22"
+    volumes:
+      - "/home/user/repo/adt-backend:/adt-backend"
+  api-nestjs-dev:
+    image: lfvalcar/node-proyecto
+    networks:
+      - test
+    ports: 
+      - "3001:3000"
+      - "2201:22"
+    volumes:
+      - "/home/user/repo/adt-backend-dev:/adt-backend-dev"
   test-ubuntu:
     image: lfvalcar/ubuntu-test
     hostname: test-ubuntu

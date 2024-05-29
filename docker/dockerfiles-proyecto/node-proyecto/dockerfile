@@ -1,0 +1,15 @@
+# Partir de la imagen oficial de node
+FROM lfvalcar/node-dev
+
+# Variables requeridas en la ejecución del contenedor
+# ${id_rsa} - El archivo que contiene la clave rsa
+
+# Copiar los archivos de configuración
+COPY ./setup/* /root/setup/
+
+# Exponer puertos que se usarán
+EXPOSE 22
+EXPOSE 3000
+
+# Mantener contenedor en ejeución
+CMD [ "bash", "/root/setup/start.sh" ]
