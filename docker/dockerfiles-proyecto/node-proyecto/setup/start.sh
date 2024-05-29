@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# Variables externas obligatorias provenientes del dockerfile o del docker-compose
+# Variables de entorno
 # ${HOME} - Variable que contiene el home de usuario actual
+
+# Variables externas obligatorias provenientes del dockerfile o del docker-compose
 # ${id_rsa} - El archivo que contiene la clave rsa
 
 # Comandos/utilidades utilizados
