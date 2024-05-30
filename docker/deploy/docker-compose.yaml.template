@@ -40,6 +40,8 @@ services:
       - ./volumes/bind9-zones:/etc/bind/zones
   api-nestjs:
     image: lfvalcar/node-proyecto
+    environment:
+      - id_rsa=id_rsa.pub
     networks:
       - test
     ports: 
@@ -49,6 +51,8 @@ services:
       - "/home/user/repo/adt-backend:/adt-backend"
   api-nestjs-dev:
     image: lfvalcar/node-proyecto
+    environment:
+      - id_rsa=id_rsa.pub
     networks:
       - test
     ports: 

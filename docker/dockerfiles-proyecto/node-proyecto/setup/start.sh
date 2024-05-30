@@ -16,11 +16,11 @@
 set -e
 
 # Añadir la clave rsa al home del usuario administrador
-if [ -f ${HOME}/.ssh ]; then
+if [ -d ${HOME}/.ssh ]; then
     cat /root/setup/${id_rsa} >> ${HOME}/.ssh/authorized_keys
     echo 'ID RSA establecida en authorized_keys'
 else
-    echo "El directorio $HOME/.ssh, no se añade la clave rsa"
+    echo "El directorio $HOME/.ssh no existe, no se añade la clave rsa"
 fi
 
 # Iniciar servicio SSH

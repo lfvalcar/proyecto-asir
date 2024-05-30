@@ -23,6 +23,8 @@ if [ -f /etc/ssh/sshd_config ]; then
     sed -i 's/#MaxAuthTries 6/MaxAuthTries 3/g' /etc/ssh/sshd_config 
     # Se permite la autenticación mediante clave pública
     sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/g' /etc/ssh/sshd_config
+    # Se deniega la autenticación mediante contraseña
+    sed -i 's/#   PasswordAuthentication yes/    PasswordAuthentication no/g' /etc/ssh/ssh_config 
     echo '/etc/ssh/sshd_config configurado'
 
     # Comprobar si existe el directorio /var/run/sshd
