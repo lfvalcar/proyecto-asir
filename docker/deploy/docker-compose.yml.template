@@ -1,5 +1,6 @@
 services:
   ldap-openldap:
+    container_name: dc-domain
     image: lfvalcar/openldap-proyecto
     hostname: dc.test.local
     environment:
@@ -20,6 +21,7 @@ services:
     ports:
       - "11002:636"
   dns-bind9:
+    container_name: dns-domain
     image: lfvalcar/bind9
     hostname: dns.test.local
     environment:
@@ -38,19 +40,10 @@ services:
       - "11001:53/udp"
     volumes:
       - ./volumes/bind9-zones:/etc/bind/zones
-  api-nestjs:
-    image: lfvalcar/node-proyecto
-    environment:
-      - id_rsa=id_rsa.pub
-    networks:
-      - test
-    ports: 
-      - "3000:3000"
-      - "2200:22"
-    volumes:
-      - "/home/user/repo/adt-backend:/adt-backend"
   api-nestjs-dev:
+    container_name: api-domain
     image: lfvalcar/node-proyecto
+    command: [ "bash", "/root/setup/setup-nestjs.sh" ]
     environment:
       - id_rsa=id_rsa.pub
     networks:

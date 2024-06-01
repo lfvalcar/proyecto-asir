@@ -1,0 +1,9 @@
+dc1=test
+dc2=local
+ca_cert=ca-cert.crt
+ca_key=ca-key.pem
+ca_info=ca.info
+server_cert=server-cert.pem
+server_key=server-key.pem
+server_info=server.info
+certinfo_ldif=ca-info.ldif
