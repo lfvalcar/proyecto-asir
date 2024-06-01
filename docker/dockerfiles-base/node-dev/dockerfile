@@ -1,3 +1,4 @@
+# El script que monta el servicio se ejecuta manualmente
 # Partir de la imagen oficial de node
 FROM node:latest
 
@@ -8,7 +9,7 @@ RUN apt update && apt install -yq htop openssh-server
 COPY ./setup /root/setup
 
 # Iniciar script de configuración
-RUN bash /root/setup/setup.sh
+RUN bash /root/setup/setup-ssh.sh
 
 # Mantener contenedor en ejeución
 CMD [ "tail", "-f", "/dev/null" ]

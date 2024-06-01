@@ -1,3 +1,4 @@
+# El script que monta el servicio se ejecuta manualmente
 # Se utiliza la imagen de ubuntu "jammy"
 FROM ubuntu:jammy
 

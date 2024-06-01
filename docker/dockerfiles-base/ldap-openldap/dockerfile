@@ -1,7 +1,8 @@
+# El script que monta el servicio se ejecuta manualmente
 # Se utiliza ubuntu jammy
 FROM ubuntu:jammy
 
-# Requisitos
+# Requisitos variables
 # - dc1=test
 # - dc2=local
 # - ca_cert=ca-cert.crt

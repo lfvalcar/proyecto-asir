@@ -35,7 +35,7 @@ install_slapd(){
   cat ${DIR_SETUP}/slapd.config | debconf-set-selections
 
   # Instalación de los paquetes
-  apt install -yq slapd ldap-utils
+  apt update && apt install -yq slapd ldap-utils
 }
 
 config_slapd(){
