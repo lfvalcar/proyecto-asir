@@ -46,6 +46,7 @@ services:
     command: [ "bash", "/root/setup/setup-nestjs.sh" ]
     environment:
       - id_rsa=id_rsa.pub
+      - repo=/adt-backend-dev
     networks:
       - test
     ports: 

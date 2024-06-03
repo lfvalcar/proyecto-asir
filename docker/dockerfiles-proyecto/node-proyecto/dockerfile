@@ -3,6 +3,7 @@ FROM lfvalcar/node-dev
 
 # Variables requeridas en la ejecución del contenedor
 # ${id_rsa} - El archivo que contiene la clave rsa
+# $repo - Repositorio del proyecto que utiliza node y npm como gestor de paquetes
 
 # Copiar los archivos de configuración
 COPY ./setup/* /root/setup/
