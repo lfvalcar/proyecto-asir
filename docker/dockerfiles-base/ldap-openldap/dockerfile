@@ -2,7 +2,7 @@
 # Se utiliza ubuntu jammy
 FROM ubuntu:jammy
 
-# Requisitos variables
+# Requisitos variables obligatorias para el funcionamiento
 # - dc1=test
 # - dc2=local
 # - ca_cert=ca-cert.crt
@@ -13,6 +13,10 @@ FROM ubuntu:jammy
 # - ca_info=ca.info (Necesario si no tienes certificado)
 # - server_info=server.info
 
+# Variables opcionales
+# $initial_ldif - Archivo con una esquema inicial de ou,grupos,usuarios a añadir 
+# $admin_ldap_passwd - Contraseña del usuario administrador del directorio
+
 # Variables del dockerfile
 ENV TZ Europe/Madrid
 ENV DEBIAN_FRONTEND noninteractive
@@ -22,7 +26,7 @@ ENV DIR_SETUP /root/setup
 RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
 
 # Se actualiza la lista de paquetes y se instala los paquetes necesarios
-RUN apt update -yq && apt install -yq debconf-utils ca-certificates
+RUN apt update -yq && apt install debconf-utils ca-certificates -yq
 
 # Copiar archivos de configuración del demonio slapd
 COPY ./setup ${DIR_SETUP}

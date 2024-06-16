@@ -33,7 +33,7 @@ config_ssh(){
 
 npm_depends(){
     # Actualización de npm y instalación de dependencias del repositorio del proyecto
-    npm update -g npm && cd $repo && npm i
+    npm update -g npm
 }
 
 main(){

@@ -15,7 +15,7 @@
 # certtool
 # ldapmodify
 
-# Variables
+# Variables obligatorias para el funcionamiento
 # ${dc1} - Dominio parte 1
 # ${dc2} - Dominio parte 2
 # $ca_cert - Certificado de autoridad
@@ -27,6 +27,10 @@
 # $certinfo_ldif -Archivo para establecer los archivos para tls (Necesario si no tienes certificado)
 # ${DIR_SETUP} - Directorio donde se ubican los certificados y archivos de configuración
 
+# Variables opcionales
+# $initial_ldif - Archivo con una esquema inicial de ou,grupos,usuarios a añadir
+# $admin_ldap_passwd - Contraseña del usuario administrador del directorio
+
 # Cargar variables de entorno
 set -e
 
@@ -35,7 +39,7 @@ install_slapd(){
   cat ${DIR_SETUP}/slapd.config | debconf-set-selections
 
   # Instalación de los paquetes
-  apt update && apt install -yq slapd ldap-utils
+  apt update && apt-get install slapd ldap-utils -yq
 }
 
 config_slapd(){
@@ -49,7 +53,7 @@ config_slapd(){
 
 selfsigned_certificate(){
   # Se instalan los paquetes necesarios para la creación de certificado autofirmado
-  apt install -yq gnutls-bin ssl-cert
+  apt-get install gnutls-bin ssl-cert -yq
 
   # Se genera la clave privada para la solicitud del certificado
   certtool --generate-privkey --bits 4096 --outfile /etc/ssl/private/$ca_key
@@ -132,6 +136,11 @@ main(){
   then
     config_certificate
     echo 'slapd instalado y configurado con ssl/tls con éxito'
+
+    # Implementación del archivo con el esquema inicial
+    if [ ! -z $initial_ldif ] && [ -f "${DIR_SETUP}/$initial_ldif" ]; then
+      ldapadd -x -D "cn=admin,dc=${dc1},dc=${dc2}" -w $admin_ldap_passwd -f "${DIR_SETUP}/$initial_ldif"
+    fi
 
     # Mantener contenedor en ejecución
     tail -f /dev/null
