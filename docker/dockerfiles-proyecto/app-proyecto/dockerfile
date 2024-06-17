@@ -1,0 +1,19 @@
+# Partir de la imagen oficial de node
+FROM node:latest
+
+# Variables requeridas
+# $repoApp = Repositorio que contiene el código de la api a desplegar
+# $appName = Nombre del proyecto o api
+
+# Variables de entorno en el dockerfile
+ENV TZ Europe/Madrid
+
+# Establecer la zona horaria
+RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezones
+
+# Copiar script de construcción a la imagen
+COPY start.sh /root/
+
+# Ejecución del script de construcción
+CMD [ "bash", "/root/start.sh" ] 
+
