@@ -5,3 +5,6 @@ slapd.config
 *.pem
 *.yaml
 *.pub
+.env
+*.ts
+
