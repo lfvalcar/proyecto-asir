@@ -2,6 +2,10 @@
 # Partir de la imagen oficial de node
 FROM node:latest
 
+# Variables requeridas en la ejecución del contenedor
+# ${id_rsa} - El archivo que contiene la clave rsa
+# $repo - Repositorio del proyecto que utiliza node y npm como gestor de paquetes
+
 # Instalación de paquetes necesarios para el desarrollo y monitorización remota
 RUN apt update && apt install -yq htop openssh-server
 
@@ -11,5 +15,9 @@ COPY ./setup /root/setup
 # Iniciar script de configuración
 RUN bash /root/setup/setup-ssh.sh
 
+# Exponer puertos que se usarán
+EXPOSE 22
+EXPOSE 3000
+
 # Mantener contenedor en ejeución
-CMD [ "tail", "-f", "/dev/null" ]
+CMD [ "bash", "/root/setup/start.sh" ]
