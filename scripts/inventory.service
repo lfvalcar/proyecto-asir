@@ -1,0 +1,11 @@
+[Unit]
+Description=Inventario
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/bin/bash /root/scripts/inventory.sh
+
+[Install]
+WantedBy=network-online.target

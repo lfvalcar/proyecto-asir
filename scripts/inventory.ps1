@@ -31,15 +31,11 @@ $systemInfo = @{
 $jsonOutput = $systemInfo | ConvertTo-Json -Depth 4
 
 # URL de la API REST en NestJS
-$apiUrl = "http://192.168.56.1:3001/api/inventory"  # Reemplaza con la URL correcta de tu API
+$apiUrl = "http://api.formateya.es/api/inventory"  # Reemplaza con la URL correcta de tu API
 
 try {
     # Envía la solicitud POST a la API REST
-    $response = Invoke-RestMethod -Uri $apiUrl -Method Post -Body $jsonOutput -ContentType "application/json"
-
-    # Imprime la respuesta de la API
-    Write-Output "Respuesta de la API:"
-    Write-Output $response
+    Invoke-RestMethod -Uri $apiUrl -Method Post -Body $jsonOutput -ContentType "application/json"
 } catch {
-    Write-Error "Error al enviar la solicitud a la API: $_"
+    Write-Error "Error al enviar la solicitud a la API"
 }
